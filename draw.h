@@ -13,3 +13,4 @@ void drawShadeSolidShere(int initFlg);
 void draw20210110(int initFlg);
 void draw20210110_2(int initFlg);
 void draw20210110_3(int initFlg);
+void draw20210110_4(int initFlg);
