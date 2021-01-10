@@ -8,6 +8,7 @@
 const int width = 800;
 const int height = 800;
 GLuint* buffer;
+int frameCount = 0;
 
 int main() {
 
@@ -54,10 +55,18 @@ int main() {
         //バックバッファをクリア
         glClearColor(0.2f, 0.2f, 0.2f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        //glClearDepth(1.0);
+        glClearDepth(1.0);
+
+        //陰面消去を有効にする
+        glEnable(GL_DEPTH_TEST);
 
         //描画
-        drawSimpleSolidShere(initFlg);
+        //drawSimpleSolidShere(initFlg);
+        //drawShadeSolidShere(initFlg);
+        draw20210110(initFlg);
+
+        //陰面消去を無効にする
+        glDisable(GL_DEPTH_TEST);
 
         //バックバッファとフロントバッファの入れ替え
         glfwSwapBuffers(window);
@@ -66,6 +75,8 @@ int main() {
         if (initFlg == 0) {
             initFlg = 1;
         }
+
+        frameCount += 1;
 
     }
 
