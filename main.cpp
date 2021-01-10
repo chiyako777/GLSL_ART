@@ -64,7 +64,8 @@ int main() {
         //drawSimpleSolidShere(initFlg);
         //drawShadeSolidShere(initFlg);
         //draw20210110(initFlg);
-        draw20210110_2(initFlg);
+        //draw20210110_2(initFlg);
+        draw20210110_3(initFlg);
 
         //‰A–ÊÁ‹‚ğ–³Œø‚É‚·‚é
         glDisable(GL_DEPTH_TEST);
