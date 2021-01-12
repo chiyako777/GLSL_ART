@@ -1,3 +1,4 @@
+//sin‚ðŽg‚Á‚½“_–Å
 #version 140
 
 varying float x;

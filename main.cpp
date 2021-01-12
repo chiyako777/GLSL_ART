@@ -61,7 +61,7 @@ int main() {
         glEnable(GL_DEPTH_TEST);
 
         //•`‰æ
-        draw20210110_5(initFlg);
+        draw20210110_6(initFlg);
 
         //‰A–ÊÁ‹‚ğ–³Œø‚É‚·‚é
         glDisable(GL_DEPTH_TEST);

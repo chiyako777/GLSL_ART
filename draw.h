@@ -15,3 +15,4 @@ void draw20210110_2(int initFlg);
 void draw20210110_3(int initFlg);
 void draw20210110_4(int initFlg);
 void draw20210110_5(int initFlg);
+void draw20210110_6(int initFlg);
