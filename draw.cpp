@@ -107,8 +107,8 @@ void draw20210110(int initFlg) {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		//** シェーダー読み込み
-		std::string vShaderFileName = R"#(GLSL/20210110.vert)#";
-		std::string fShaderFileName = R"#(GLSL/20210110.frag)#";
+		std::string vShaderFileName = R"#(GLSL/202101/20210110.vert)#";
+		std::string fShaderFileName = R"#(GLSL/202101/20210110.frag)#";
 		programId = createShader(vShaderFileName, fShaderFileName);
 
 	}
@@ -148,8 +148,8 @@ void draw20210110_2(int initFlg) {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		//** シェーダー読み込み
-		std::string vShaderFileName = R"#(GLSL/20210110_2.vert)#";
-		std::string fShaderFileName = R"#(GLSL/20210110_2.frag)#";
+		std::string vShaderFileName = R"#(GLSL/202101/20210110_2.vert)#";
+		std::string fShaderFileName = R"#(GLSL/202101/20210110_2.frag)#";
 		programId = createShader(vShaderFileName, fShaderFileName);
 
 	}
@@ -189,8 +189,8 @@ void draw20210110_3(int initFlg) {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		//** シェーダー読み込み
-		std::string vShaderFileName = R"#(GLSL/20210110_3.vert)#";
-		std::string fShaderFileName = R"#(GLSL/20210110_3.frag)#";
+		std::string vShaderFileName = R"#(GLSL/202101/20210110_3.vert)#";
+		std::string fShaderFileName = R"#(GLSL/202101/20210110_3.frag)#";
 		programId = createShader(vShaderFileName, fShaderFileName);
 
 	}
@@ -230,8 +230,8 @@ void draw20210110_4(int initFlg) {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		//** シェーダー読み込み
-		std::string vShaderFileName = R"#(GLSL/20210110_4.vert)#";
-		std::string fShaderFileName = R"#(GLSL/20210110_4.frag)#";
+		std::string vShaderFileName = R"#(GLSL/202101/20210110_4.vert)#";
+		std::string fShaderFileName = R"#(GLSL/202101/20210110_4.frag)#";
 		programId = createShader(vShaderFileName, fShaderFileName);
 
 	}
@@ -271,8 +271,8 @@ void draw20210110_5(int initFlg) {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		//** シェーダー読み込み
-		std::string vShaderFileName = R"#(GLSL/20210110_5.vert)#";
-		std::string fShaderFileName = R"#(GLSL/20210110_5.frag)#";
+		std::string vShaderFileName = R"#(GLSL/202101/20210110_5.vert)#";
+		std::string fShaderFileName = R"#(GLSL/202101/20210110_5.frag)#";
 		programId = createShader(vShaderFileName, fShaderFileName);
 
 	}
@@ -293,7 +293,7 @@ void draw20210110_5(int initFlg) {
 
 }
 
-//** 20210110_6
+//** 20210110_6,7,20210113
 void draw20210110_6(int initFlg) {
 
 	GLfloat vertex[] = {
@@ -312,8 +312,15 @@ void draw20210110_6(int initFlg) {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		//** シェーダー読み込み
-		std::string vShaderFileName = R"#(GLSL/20210110_6.vert)#";
-		std::string fShaderFileName = R"#(GLSL/20210110_6.frag)#";
+		//std::string vShaderFileName = R"#(GLSL/202101/20210110_6.vert)#";
+		//std::string fShaderFileName = R"#(GLSL/202101/20210110_6.frag)#";
+
+		//std::string vShaderFileName = R"#(GLSL/202101/20210110_7.vert)#";
+		//std::string fShaderFileName = R"#(GLSL/202101/20210110_7.frag)#";
+
+		std::string vShaderFileName = R"#(GLSL/202101/20210113.vert)#";
+		std::string fShaderFileName = R"#(GLSL/202101/20210113.frag)#";
+
 		programId = createShader(vShaderFileName, fShaderFileName);
 
 	}
