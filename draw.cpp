@@ -396,4 +396,6 @@ void draw20210126(int initFlg) {
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	std::cout << "frameCount = " << frameCount * 7.0 * 0.003 << "\n";
+
 }

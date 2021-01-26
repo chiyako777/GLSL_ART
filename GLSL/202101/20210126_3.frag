@@ -10,14 +10,14 @@ void main(void){
 
 	vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / resolution;		// ピクセル座標を -1 ～ 1 の間に正規化（左下最小）
 
-	//float t = sin(0.001 * frameCount);
-	//float harfpi = 3.141592 / 2;
-	//float t = sin( distance(m,p) / sqrt(8) * harfpi);	//(1) m,p間の距離が短いほど暗い。tの値は0～1を循環する　（distanceの最大値が√8なので、除算して正規化）
-	//float t = sin( distance(m,p) / sqrt(8) * harfpi *  frameCount * 0.01);	//(2) (1)の状態にframeCountを掛けてアニメーション化
+	float a = 10.0;		//輪の周期を制御。値が大きいほどsinの値の循環が激しくなる⇒輪の周期が短くなる
+	float b = 7.0;		//アニメーションの速さを制御  値が大きいほど加算する数値の傾きが大きくなる⇒sinの値の循環が激しくなる⇒アニメーションが早くなる
 
-
-	//float t = sin(length(m - p) * 30.0 + frameCount * 5.0 *0.001);
-	float t = sin(length(m - p) * 30 + frameCount * 3.0 * 0.001);
+						//※「frameCountはどんどん増えるのになぜアニメーションの速さが一定なの？」というのが感覚的にピンと来にくいので補足
+						//  「 frameCount * b * 0.003 」の部分は、frameCountの増加に伴い定量ずつ増えていく（直線的な増え方）
+						//　「定量的に増えていく値」を加算していくので、値がいくら増えて行ってもアニメーションの速度はずっと変わらない
+						
+	float t = sin(length(m - p) * a + frameCount * b *0.003);
 	
 	gl_FragColor = vec4(vec3(t),1.0);
 
