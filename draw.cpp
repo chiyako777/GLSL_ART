@@ -4,6 +4,9 @@
 #include "shader.h"
 #include "matrix.h"
 
+extern const int width = 800;
+extern const int height = 600;
+
 extern GLuint* buffer;
 extern int frameCount;
 extern GLdouble mouse[2];
@@ -342,6 +345,8 @@ void draw20210110_6(int initFlg) {
 
 }
 
+//このサイトで学び始め
+//https://wgld.org/d/glsl/g001.html
 void draw20210126(int initFlg) {
 	GLfloat vertex[] = {
 		-1.0,-1.0,0,
@@ -374,8 +379,8 @@ void draw20210126(int initFlg) {
 
 	//画面サイズをシェーダーに渡す
 	int resolLocation = glGetUniformLocation(programId, "resolution");
-	GLfloat resolution[] = { 800,800 };
-	glUniform2fv(resolLocation, 2, resolution);
+	GLfloat resolution[] = { width,height };
+	glUniform2fv(resolLocation, 1, resolution);
 
 	//フレームカウントをシェーダーに渡す
 	int fcLocation = glGetUniformLocation(programId, "frameCount");
@@ -383,7 +388,7 @@ void draw20210126(int initFlg) {
 
 	//マウス座標をシェーダーに渡す
 	int msLocation = glGetUniformLocation(programId, "mouse");
-	glUniform2dv(msLocation, 2, mouse);
+	glUniform2dv(msLocation, 1, mouse);
 
 
 	glDrawArrays(GL_QUADS, 0, 4);

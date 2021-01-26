@@ -6,9 +6,10 @@ uniform int frameCount;
 
 
 void main(void){
-	//vec2 p = (gl_FragCoord.xy * 2.0 - 800) / 800;		// ピクセル座標を -1 ～ 1 の間に正規化された値
+	vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / resolution;		// ピクセル座標を -1 ～ 1 の間に正規化
 
-	gl_FragColor = vec4(1.0,0.0,1.0,1.0);
-	//gl_FragColor = vec4(1.0*sin(frameCount*0.001),0,1.0,1.0);
-	//gl_FragColor = vec4(1.0*sin(mouse.x * resolution.x * 0.001 * frameCount),0,1.0,1.0);
+	vec2 color = (vec2(1.0)+p.xy) * 0.5;	//正規化した座標を、カラーの0～1の範囲に直す
+
+	gl_FragColor = vec4(color,1.0,1.0);
+	
 }
