@@ -9,6 +9,16 @@ const int width = 800;
 const int height = 800;
 GLuint* buffer;
 int frameCount = 0;
+GLdouble mouse[2];
+
+//マウスカーソルが動いた時のコールバック
+void cursor_event(GLFWwindow* window, double xpos, double ypos) {
+    
+    //pixel座標を0～1に正規化
+    mouse[0] = xpos/(double)width;
+    mouse[1] = ypos/(double)height;
+    //std::cout << "xpos = " << mouse[0] << " ypos = " << mouse[1] << "\n";
+}
 
 int main() {
 
@@ -49,6 +59,10 @@ int main() {
 
     int initFlg = 0;
 
+    mouse[0] = 0.0;
+    mouse[1] = 0.0;
+    glfwSetCursorPosCallback(window, cursor_event);
+
     // メインループ
     while (glfwWindowShouldClose(window) == GL_FALSE) {
 
@@ -61,7 +75,7 @@ int main() {
         glEnable(GL_DEPTH_TEST);
 
         //描画
-        draw20210110_6(initFlg);
+        draw20210126(initFlg);
 
         //陰面消去を無効にする
         glDisable(GL_DEPTH_TEST);

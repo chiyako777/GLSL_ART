@@ -6,6 +6,7 @@
 
 extern GLuint* buffer;
 extern int frameCount;
+extern GLdouble mouse[2];
 
 //シンプルな球の描画
 void drawSimpleSolidShere(int initFlg) {
@@ -334,6 +335,56 @@ void draw20210110_6(int initFlg) {
 	//フレームカウントをシェーダーに渡す
 	int fcLocation = glGetUniformLocation(programId, "frameCount");
 	glUniform1i(fcLocation, frameCount);
+
+	glDrawArrays(GL_QUADS, 0, 4);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+}
+
+void draw20210126(int initFlg) {
+	GLfloat vertex[] = {
+		-1.0,-1.0,0,
+		-1.0,1.0,0,
+		1.0,1.0,0,
+		1.0,-1.0,0
+	};
+
+	if (initFlg == 0) {
+		//** 描画データ作成
+		buffer = new GLuint[2];
+		glGenBuffers(2, buffer);
+		glBindBuffer(GL_ARRAY_BUFFER, buffer[0]);
+		glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(float), vertex, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		//** シェーダー読み込み
+		std::string vShaderFileName = R"#(GLSL/202101/20210126.vert)#";
+		std::string fShaderFileName = R"#(GLSL/202101/20210126.frag)#";
+
+		programId = createShader(vShaderFileName, fShaderFileName);
+
+	}
+
+	//** シェーダーのattribute変数に頂点データを渡す
+	glBindBuffer(GL_ARRAY_BUFFER, buffer[0]);
+	int posLocation = glGetAttribLocation(programId, "position");
+	glEnableVertexAttribArray(posLocation);
+	glVertexAttribPointer(posLocation, 3, GL_FLOAT, false, 0, NULL);
+
+	//画面サイズをシェーダーに渡す
+	int resolLocation = glGetUniformLocation(programId, "resolution");
+	GLfloat resolution[] = { 800,800 };
+	glUniform2fv(resolLocation, 2, resolution);
+
+	//フレームカウントをシェーダーに渡す
+	int fcLocation = glGetUniformLocation(programId, "frameCount");
+	glUniform1i(fcLocation, frameCount);
+
+	//マウス座標をシェーダーに渡す
+	int msLocation = glGetUniformLocation(programId, "mouse");
+	glUniform2dv(msLocation, 2, mouse);
+
 
 	glDrawArrays(GL_QUADS, 0, 4);
 
