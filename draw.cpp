@@ -4,12 +4,12 @@
 #include "shader.h"
 #include "matrix.h"
 
-extern const int width = 800;
-extern const int height = 600;
+extern int width;
+extern int height;
 
 extern GLuint* buffer;
 extern int frameCount;
-extern GLdouble mouse[2];
+extern GLfloat mouse[2];
 
 //シンプルな球の描画
 void drawSimpleSolidShere(int initFlg) {
@@ -364,8 +364,8 @@ void draw20210126(int initFlg) {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		//** シェーダー読み込み
-		std::string vShaderFileName = R"#(GLSL/202101/20210126.vert)#";
-		std::string fShaderFileName = R"#(GLSL/202101/20210126.frag)#";
+		std::string vShaderFileName = R"#(GLSL/202101/20210126_3.vert)#";
+		std::string fShaderFileName = R"#(GLSL/202101/20210126_3.frag)#";
 
 		programId = createShader(vShaderFileName, fShaderFileName);
 
@@ -388,7 +388,8 @@ void draw20210126(int initFlg) {
 
 	//マウス座標をシェーダーに渡す
 	int msLocation = glGetUniformLocation(programId, "mouse");
-	glUniform2dv(msLocation, 1, mouse);
+	//mouse[0] = 1; mouse[1] = 1;		//マウス座標をいったん決め打つ
+	glUniform2fv(msLocation, 1, mouse);
 
 
 	glDrawArrays(GL_QUADS, 0, 4);
