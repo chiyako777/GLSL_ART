@@ -13,8 +13,7 @@ void main(void){
 
 	vec2 m = vec2(0,0);
 
-	float color = 0.01 / abs(0.8  +  (sin(atan(p.x,p.y)*10)*0.02)  -  sin(length(m-p)));
-
+	float color = 0.01 / abs(0.8  +  (sin(atan(p.x,p.y)*10)*0.02)  -  length(m-p));
 
 	gl_FragColor = vec4(vec3(color),1.0);
 
