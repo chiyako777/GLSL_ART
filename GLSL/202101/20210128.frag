@@ -21,7 +21,7 @@ void main(void){
 	//float color = 0.01 / abs(0.8 * sin(atan(p.x,p.y) * 10) * sin(frameCount * 0.0005) - length(m-p));			
 							//(2) (1)から、lengthを減算する対象の数値にフレームカウントのsinを掛けて、花の大きさが変化するようにする
 
-	float color = 0.01 / abs(0.8 * sin(atan(p.x,p.y) * 10) - length(m-p) * sin(atan(p.x,p.y) * 10));
+	//float color = 0.01 / abs(0.8 * sin(atan(p.x,p.y) * 10) - length(m-p) * sin(atan(p.x,p.y) * 10));
 							//(3) (2)・(4)の合わせ掛け
 							//    まずは(4)のレンダリング結果が真ん中にギュッと詰まる感じになって、細い放射線状になる
 							//    また、距離と減算値に掛け合わせる係数が同じだからリングも生き残る
@@ -29,6 +29,7 @@ void main(void){
 	//float color = 0.01 / abs(0.8  - length(m-p) * sin(atan(p.x,p.y) * 10));
 							//(4) 減算するlength側に、アークタンジェント定数倍のsinを掛ける。距離が0.8近いのに明るくならないところや、距離が0.8より遠いのにアークタンジェント定数倍sinの値がうまくハマって結果的に明るくなるところとかが現れる
 
+	float color = 0.01 / abs(0.8 * abs(sin(atan(p.x,p.y) * 10)) - length(m-p));	//(5) 花びら増えた
 
 	gl_FragColor = vec4(vec3(color),1.0);
 
