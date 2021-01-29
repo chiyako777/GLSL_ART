@@ -1,4 +1,4 @@
-//パーリンノイズで色々する
+//パーリンノイズでマグマ
 //(原理の参考)https://postd.cc/understanding-perlin-noise/
 
 #version 120
@@ -50,18 +50,28 @@ float noise(vec2 p){
     return t;
 }
 
+//シームレスノイズ生成
+float snoise(vec2 p,vec2 q,vec2 r){
+    return noise(vec2(p.x,       p.y      )) *        q.x  *        q.y  +
+               noise(vec2(p.x,       p.y + r.y)) *        q.x  * (1.0 - q.y) +
+               noise(vec2(p.x + r.x, p.y      )) * (1.0 - q.x) *        q.y  +
+               noise(vec2(p.x + r.x, p.y + r.y)) * (1.0 - q.x) * (1.0 - q.y);
+}
+
+
 void main(void){
 
-    vec2 t = gl_FragCoord.xy + vec2(frameCount * 0.001);
-    float n = noise(t);
+    //noise
+    //vec2 t = gl_FragCoord.xy + vec2(frameCount * 0.001);
+    //float n = noise(t);
 
+    //seamless noise
+    const float map = 128.0;        //タイルの一辺のピクセル
+    vec2 t = mod(gl_FragCoord.xy + vec2(frameCount * 0.001), map);      // ピクセル座標÷タイル一辺のピクセル(map)の余り ⇒ すなわち、タイル単位にばらした上でのピクセル座標( 例：x=129ならx=1になる )
+    float n = snoise(t,t/map,vec2(map));    // t:タイル単位にばらしたピクセル座標、t/map: tを0~1に正規化
 
-	vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / resolution;		// ピクセル座標を -1 ～ 1 の間に正規化（左下最小）
-
-    vec2 center = vec2(0.0,0.0);
-    vec2 temp = (center - p) * n;     //tempは絶対1以下の数値になり、またy座標が0以上(上半分)の時は負の値になる
-
-    gl_FragColor = vec4(temp.y,0.0,0.0,1.0);
+    gl_FragColor = vec4(vec3(n),1.0);
+    
 
 }
 

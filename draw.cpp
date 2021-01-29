@@ -364,8 +364,8 @@ void draw20210126(int initFlg) {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		//** シェーダー読み込み
-		std::string vShaderFileName = R"#(GLSL/202101/20210129_7.vert)#";
-		std::string fShaderFileName = R"#(GLSL/202101/20210129_7.frag)#";
+		std::string vShaderFileName = R"#(GLSL/202101/20210129_8.vert)#";
+		std::string fShaderFileName = R"#(GLSL/202101/20210129_8.frag)#";
 
 		programId = createShader(vShaderFileName, fShaderFileName);
 
