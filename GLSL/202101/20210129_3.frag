@@ -1,28 +1,56 @@
-//fan
+//パーリンノイズ
 #version 120
 
 uniform vec2 resolution;
 uniform vec2 mouse;
 uniform int frameCount;
 
+const int   oct  = 8;       //オクターブ
+const float per  = 0.5;     //パーシステンス
+const float PI   = 3.1415926;
+const float cCorners = 1.0 / 16.0;
+const float cSides   = 1.0 / 8.0;
+const float cCenter  = 1.0 / 4.0;
+
+// 補間関数(乱数の間を補間する)
+float interpolate(float a, float b, float x){
+    float f = (1.0 - cos(x * PI)) * 0.5;
+    return a * (1.0 - f) + b * f;
+}
+
+// 乱数生成
+float rnd(vec2 p){
+    return fract(sin(dot(p ,vec2(12.9898,78.233))) * 43758.5453);       //乱数と言いつつ、ランダムではなく規則性がある。入力が同じならば、常に同じ値が返る
+}
+
+// 補間乱数
+float irnd(vec2 p){
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    vec4 v = vec4(rnd(vec2(i.x,       i.y      )),
+                  rnd(vec2(i.x + 1.0, i.y      )),
+                  rnd(vec2(i.x,       i.y + 1.0)),
+                  rnd(vec2(i.x + 1.0, i.y + 1.0)));
+    return interpolate(interpolate(v.x, v.y, f.x), interpolate(v.z, v.w, f.x), f.y);
+}
+
+//ノイズ生成(0～1の範囲の値を返却)
+float noise(vec2 p){
+    float t = 0.0;
+    for(int i=0; i<oct; i++){
+        float freq = pow(2.0,float(i));         //frequency:それぞれのオクターブの影響力を決める　2^oct
+        float amp = pow(per,float(oct-i));      //amplitude:それぞれのオクターブの影響力を決める  persistence^oct
+        t += irnd(vec2( p.x/freq , p.y/freq )) * amp;
+    }
+    return t;
+}
 
 void main(void){
-	//vec2 m = vec2(mouse.x * 2.0 - 1.0,-(mouse.y * 2.0 - 1.0));		//マウス座標(0～1)を-1～1の範囲に直す（左上最小）
 
-	vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / resolution;		// ピクセル座標を -1 ～ 1 の間に正規化（左下最小）
+    //ノイズ
+    vec2 t = gl_FragCoord.xy + vec2(frameCount * 0.001);
 
-	vec2 m = vec2(0,0);
-
-	//float color = 0.01 / abs(0.8  +  (sin(atan(p.x,p.y)*10)*0.02)  -  length(m-p));
-
-	float a = atan(p.x,p.y) - length(p) * 0.5;
-	float u = abs( sin(a * 10) );		//length から減算する値に、アークタンジェントからlength(p)を引いた数値のsinを使う
-										//length(p)を引くことによって起こる効果：本来なら明るい所が暗くなる
-																				 本来なら暗い所が明るくなる
-																				 さらに、そのズレ具合が距離によって変わることで、花びらが曲がる
-																				 まだちょっとイメージ湧いてないけど・・・
-	float color = 0.01 / abs(u-length(p));
-
-	gl_FragColor = vec4(vec3(color),1.0);
+    float n = noise(t);
+    gl_FragColor = vec4(vec3(n),1.0);
 
 }
