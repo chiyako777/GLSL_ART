@@ -1,4 +1,4 @@
-//パーリンノイズ
+//パーリンノイズでマグマ
 //(原理の参考)https://postd.cc/understanding-perlin-noise/
 
 #version 120
@@ -52,10 +52,19 @@ float noise(vec2 p){
 
 void main(void){
 
-    //ノイズ
     vec2 t = gl_FragCoord.xy + vec2(frameCount * 0.001);
-
     float n = noise(t);
-    gl_FragColor = vec4(vec3(n),1.0);
+
+
+	vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / resolution;		// ピクセル座標を -1 ～ 1 の間に正規化（左下最小）
+
+    if(n - 0.5 > p.y){
+        gl_FragColor = vec4(1.0,n,0.0,1.0);
+    }else{
+        gl_FragColor = vec4(0.0,0.0,0.0,1.0);
+    }
+    
+    
 
 }
+
