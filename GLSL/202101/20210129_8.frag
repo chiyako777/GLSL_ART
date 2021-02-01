@@ -70,8 +70,7 @@ void main(void){
     vec2 t = mod(gl_FragCoord.xy + vec2(frameCount * 0.001), map);      // ピクセル座標÷タイル一辺のピクセル(map)の余り ⇒ すなわち、タイル単位にばらした上でのピクセル座標( 例：x=129ならx=1になる )
     float n = snoise(t,t/map,vec2(map));    // t:タイル単位にばらしたピクセル座標、t/map: tを0~1に正規化
 
-    gl_FragColor = vec4(vec3(n),1.0);
-    
+    gl_FragColor = vec4(vec3(n),1.0);    
 
 }
 

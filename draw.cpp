@@ -356,6 +356,7 @@ void draw20210126(int initFlg) {
 	};
 
 	if (initFlg == 0) {
+
 		//** 描画データ作成
 		buffer = new GLuint[2];
 		glGenBuffers(2, buffer);
@@ -364,8 +365,8 @@ void draw20210126(int initFlg) {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		//** シェーダー読み込み
-		std::string vShaderFileName = R"#(GLSL/202101/20210129_8.vert)#";
-		std::string fShaderFileName = R"#(GLSL/202101/20210129_8.frag)#";
+		std::string vShaderFileName = R"#(GLSL/202102/20210201_2.vert)#";
+		std::string fShaderFileName = R"#(GLSL/202102/20210201_2.frag)#";
 
 		programId = createShader(vShaderFileName, fShaderFileName);
 
