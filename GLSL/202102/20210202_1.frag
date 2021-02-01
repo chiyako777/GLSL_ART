@@ -1,5 +1,5 @@
-//視野角でレイを定義
-//(原理の参考)https://wgld.org/d/glsl/g009.html
+//オブジェクトの複製
+//(原理の参考)https://wgld.org/d/glsl/g012.html
 
 #version 120
 
@@ -15,10 +15,15 @@ const float angle = 60.0;       //視野角(上下左右ともに、という話だと思う)
 const float fov = angle * 0.5 * PI / 180.0;     //視野角の半分をラジアン単位に換算
 vec3 cPos = vec3(0.0, 0.0, 3.0);      //カメラの位置
 
+//p:レイの先端座標
+vec3 trans(vec3 p){
+    //return mod(p,4.0) - 2.0;      //modを使うことによって、pの中身が何であっても0~3.999…にクランプされる。2を引くことで、-2～1.9999…の範囲になる
+    return mod(p,6.0) - 3.0;
+}
 
 //距離関数 p:レイの先端座標
 float distanceFunc(vec3 p){
-    return length(p) - sphereSize;
+    return length(trans(p)) - sphereSize;
 }
 
 //法線算出関数 p:レイとオブジェクトの交点の座標位置                //なぜこれで法線が求まるのだ・・・？
@@ -43,7 +48,7 @@ void main(void){
     float rLen = 0.0;       //レイに継ぎ足す長さ
     vec3 rPos = cPos;       //レイの先端位置（デフォルトはカメラの位置）
 
-    for(int i=0; i<16; i++){
+    for(int i=0; i<64; i++){
         distance = distanceFunc(rPos);
         rLen += distance;
         rPos = cPos + ray * rLen;
