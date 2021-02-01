@@ -1,4 +1,4 @@
-//レイマーチングで陰影のある球体を描く
+//視野角でレイを定義
 //(原理の参考)https://wgld.org/d/glsl/g009.html
 
 #version 120
@@ -9,6 +9,12 @@ uniform int frameCount;
 
 const float sphereSize = 1.0; // 描画する球の半径
 const vec3 lightDir = vec3(-0.577, 0.577, 0.577);   //光源の角度
+
+const float PI = 3.14159265;
+const float angle = 60.0;       //視野角(上下左右ともに、という話だと思う)
+const float fov = angle * 0.5 * PI / 180.0;     //視野角の半分をラジアン単位に換算
+vec3 cPos = vec3(0.0, 0.0, 3.0);      //カメラの位置
+
 
 //距離関数 p:レイの先端座標
 float distanceFunc(vec3 p){
@@ -29,14 +35,8 @@ void main(void){
 
     vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / resolution;		// ピクセル座標を -1 ～ 1 の間に正規化（左下最小）
 
-    vec3 cPos = vec3(0.0, 0.0, 3.0);      //カメラの位置
-    vec3 cDir = vec3(0.0, 0.0, -1.0);     //カメラの視線
-    vec3 cUp = vec3(0.0, 1.0, 0.0);       //カメラの上方向
-    vec3 cSide = cross(cDir,cUp);         //外積を使ってカメラの横方向を算出  (今だと1,0,0だね)
-    float targetDepth = 1.0;              //フォーカスする深度
-
     //レイを定義
-    vec3 ray = normalize(cSide * p.x + cUp * p.y + cDir * targetDepth);     //カメラ横方向 * x + カメラ上方向 * y + カメラ視線方向 * z で、「各ピクセル位置へ向かうレイ」が定義できる
+    vec3 ray = normalize(vec3( sin(fov) * p.x , sin(fov) * p.y , -cos(fov)));
 
     //マーチングループ
     float distance = 0.0;   //レイとオブジェクトの最短距離
@@ -53,8 +53,8 @@ void main(void){
     if(abs(distance) < 0.001){
         vec3 normal = getNormal(rPos);
         float diff = clamp(dot(lightDir,normal) , 0.1 , 1.0);
-        //gl_FragColor = vec4(vec3(diff), 1.0);
-        gl_FragColor = vec4(normal, 1.0);
+        gl_FragColor = vec4(vec3(diff), 1.0);
+        //gl_FragColor = vec4(normal, 1.0);
     }
     else{
         gl_FragColor = vec4(vec3(0.0), 1.0);
