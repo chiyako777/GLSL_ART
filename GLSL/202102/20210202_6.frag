@@ -1,4 +1,4 @@
-//オブジェクトの重なりを考慮
+//オブジェクト間を補間してスムーズに
 //(原理の参考)https://wgld.org/d/glsl/g013.html
 
 #version 120
@@ -21,6 +21,13 @@ vec3 trans(vec3 p){
     //return mod(p,4.0) - 2.0;      //modを使うことによって、pの中身が何であっても0~3.999…にクランプされる。2を引くことで、-2～1.9999…の範囲になる
     return mod(p,6.0) - 3.0;
 }
+
+//補間関数
+float smoothMin(float d1, float d2, float k){
+    float h = exp(-k * d1) + exp(-k * d2);
+    return -log(h) / k;
+}
+
 
 //球の距離関数 p:レイの先端座標
 float shere_distanceFunc(vec3 p){
@@ -57,6 +64,13 @@ float distFunc_Union(vec3 p){
     float d1 = torus_distanceFunc(p);
     float d2 = roundbox_distanceFunc(p);
     return min(d1,d2);
+}
+
+//複数のオブジェクトを普通の見え方？で描画するための距離関数(和集合の効果) + スムーズ化
+float distFunc_Union_Smooth(vec3 p){
+    float d1 = torus_distanceFunc(p);
+    float d2 = roundbox_distanceFunc(p);
+    return smoothMin(d1, d2, 8.0);
 }
 
 //複数のオブジェクトの重なり合う部分だけを描画するための距離関数(積集合の効果)
@@ -112,9 +126,9 @@ float distFunc_Omake(vec3 p){
 vec3 getNormal(vec3 p){
     float d = 0.0001;
     return normalize(vec3(
-        distFunc_Either(p + vec3(  d, 0.0, 0.0)) - distFunc_Either(p + vec3( -d, 0.0, 0.0)),
-        distFunc_Either(p + vec3(0.0,   d, 0.0)) - distFunc_Either(p + vec3(0.0,  -d, 0.0)),
-        distFunc_Either(p + vec3(0.0, 0.0,   d)) - distFunc_Either(p + vec3(0.0, 0.0,  -d))
+        distFunc_Union_Smooth(p + vec3(  d, 0.0, 0.0)) - distFunc_Union_Smooth(p + vec3( -d, 0.0, 0.0)),
+        distFunc_Union_Smooth(p + vec3(0.0,   d, 0.0)) - distFunc_Union_Smooth(p + vec3(0.0,  -d, 0.0)),
+        distFunc_Union_Smooth(p + vec3(0.0, 0.0,   d)) - distFunc_Union_Smooth(p + vec3(0.0, 0.0,  -d))
         ));
 }
 
@@ -131,7 +145,7 @@ void main(void){
     vec3 rPos = cPos;       //レイの先端位置（デフォルトはカメラの位置）
 
     for(int i=0; i<256; i++){
-        distance = distFunc_Either(rPos);
+        distance = distFunc_Union_Smooth(rPos);
         rLen += distance;
         rPos = cPos + ray * rLen;
     }
