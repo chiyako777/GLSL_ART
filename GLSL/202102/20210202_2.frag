@@ -28,7 +28,8 @@ float shere_distanceFunc(vec3 p){
 
 //ボックスの距離関数  p:レイの先端座標
 float box_distanceFunc(vec3 p){
-    vec3 q = abs(trans(p));
+    //vec3 q = abs(trans(p));
+    vec3 q = abs(p);
     return length( max(q - vec3(0.5,0.5,0.5) , 0.0 ));
 }
 

@@ -42,7 +42,7 @@ float roundbox_distanceFunc(vec3 p){
 //トーラス（ドーナツ型）の距離関数 p:レイの先端座標
 // (xy平面に展開)
 float torus_distanceFunc(vec3 p){
-    vec2 t = vec2(0.75 , 0.25);         //( x:トーラスの中心からどれくらいの距離を置いてパイプを作るか⇒ドーナツの穴の半径 , y:トーラスのパイプの半径⇒ドーナツ本体の断面図の半径)
+    vec2 t = vec2(0.75 , 0.25);         //( x:トーラスの中心からパイプの中心への距離 , y:トーラスのパイプの半径⇒ドーナツ本体の断面図の半径)
     vec2 r = vec2(length(p.xy) - t.x , p.z);    // r = レイの先端から、トーラスのパイプの中心への距離
     return length(r) - t.y;
 }
