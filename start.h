@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <random>
 #include "GL/glew.h"		//glewをインクルードしないと、シェーダー周りの関数が使えない
 #include"GLFW/glfw3.h"
 

@@ -5,8 +5,8 @@
 #include "start.h"
 #include "draw.h"
 
-int width = 400;
-int height = 400;
+int width = 800;
+int height = 800;
 GLuint* buffer;
 int frameCount = 0;
 GLfloat mouse[2];
@@ -15,8 +15,12 @@ GLfloat mouse[2];
 void cursor_event(GLFWwindow* window, double xpos, double ypos) {
     
     //pixelÀ•W‚ğ0`1‚É³‹K‰»
-    mouse[0] = (float)xpos/ (float)width;
-    mouse[1] = (float)ypos/ (float)height;
+    //mouse[0] = (float)xpos/ (float)width;
+    //mouse[1] = (float)ypos/ (float)height;
+
+    //pixelÀ•W‚ğ-1`1‚É³‹K‰»
+    mouse[0] = (float)xpos / (float)width * 2 - 1;
+    mouse[1] = (float)ypos / (float)height * 2 - 1;
     //std::cout << "xpos = " << mouse[0] << " ypos = " << mouse[1] << "\n";
 }
 
@@ -75,7 +79,7 @@ int main() {
         glEnable(GL_DEPTH_TEST);
 
         //•`‰æ
-        draw20210126(initFlg);
+        drawBullet(initFlg);
 
         //‰A–ÊÁ‹‚ğ–³Œø‚É‚·‚é
         glDisable(GL_DEPTH_TEST);
