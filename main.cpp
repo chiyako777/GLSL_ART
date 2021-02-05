@@ -10,17 +10,20 @@ int height = 800;
 GLuint* buffer;
 int frameCount = 0;
 GLfloat mouse[2];
+GLfloat mousePixel[2];
 
 //マウスカーソルが動いた時のコールバック
 void cursor_event(GLFWwindow* window, double xpos, double ypos) {
     
     //pixel座標を0～1に正規化
-    //mouse[0] = (float)xpos/ (float)width;
-    //mouse[1] = (float)ypos/ (float)height;
+    mouse[0] = (float)xpos/ (float)width;
+    mouse[1] = (float)ypos/ (float)height;
 
-    //pixel座標を-1～1に正規化
-    mouse[0] = (float)xpos / (float)width * 2 - 1;
-    mouse[1] = (float)ypos / (float)height * 2 - 1;
+    //マウスピクセル座標（ものによってはこっちをシェーダーに渡す）
+    mousePixel[0] = xpos;
+    mousePixel[1] = abs(ypos - (float)height);       //シェーダー側のgl_FragCoordが左下原点なので、合わせる
+
+    //std::cout << "xpos = " << xpos << "ypos = " << ypos;
     //std::cout << "xpos = " << mouse[0] << " ypos = " << mouse[1] << "\n";
 }
 
@@ -63,8 +66,8 @@ int main() {
 
     int initFlg = 0;
 
-    mouse[0] = 0.5;
-    mouse[1] = 0.5;
+    mouse[0] = 0.0;
+    mouse[1] = 0.0;
     glfwSetCursorPosCallback(window, cursor_event);
 
     // メインループ

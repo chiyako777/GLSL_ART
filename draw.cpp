@@ -10,6 +10,7 @@ extern int height;
 extern GLuint* buffer;
 extern int frameCount;
 extern GLfloat mouse[2];
+extern GLfloat mousePixel[2];
 
 //シンプルな球の描画
 void drawSimpleSolidShere(int initFlg) {
@@ -449,15 +450,20 @@ void drawBullet(int initFlg) {
 	glUniform1i(randLocation, r);
 	//std::cout << r << "\n";
 
-	//マウス座標をシェーダーに渡す
+	//マウス座標(pixel)をシェーダーに渡す
 	int msLocation = glGetUniformLocation(programId, "mouse");
-	//mouse[0] = 1; mouse[1] = 1;		//マウス座標をいったん決め打つ
-	glUniform2fv(msLocation, 1, mouse);
+	glUniform2fv(msLocation, 1, mousePixel);
 
 
 	glDrawArrays(GL_QUADS, 0, 4);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+	//当たり処理
+	GLfloat hitcol[4];
+	glReadPixels(mousePixel[0], mousePixel[1], 1,1, GL_RGBA, GL_FLOAT, hitcol);
+	if(hitcol[3] == 0.0 ){ std::cout << "hit!" << "\n"; }	
 
 	//std::cout << "frameCount = " << frameCount * 7.0 * 0.003 << "\n";
 
