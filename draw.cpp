@@ -423,7 +423,7 @@ void drawBullet(int initFlg) {
 
 		//** シェーダー読み込み
 		std::string vShaderFileName = R"#(GLSL/202102/20210205_1.vert)#";
-		std::string fShaderFileName = R"#(GLSL/bullet/test.frag)#";
+		std::string fShaderFileName = R"#(GLSL/bullet/flowerBullet_remake.frag)#";
 
 		programId = createShader(vShaderFileName, fShaderFileName);
 
