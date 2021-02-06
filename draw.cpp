@@ -423,7 +423,7 @@ void drawBullet(int initFlg) {
 
 		//** シェーダー読み込み
 		std::string vShaderFileName = R"#(GLSL/202102/20210205_1.vert)#";
-		std::string fShaderFileName = R"#(GLSL/bullet/plane2.frag)#";
+		std::string fShaderFileName = R"#(GLSL/bullet/test2.frag)#";
 
 		programId = createShader(vShaderFileName, fShaderFileName);
 
