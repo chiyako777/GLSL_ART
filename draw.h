@@ -20,3 +20,4 @@ void draw20210110_6(int initFlg);
 void draw20210126(int initFlg);
 
 void drawBullet(int initFlg);
+void drawBullet_yachie(int initFlg);

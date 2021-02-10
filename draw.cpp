@@ -423,8 +423,7 @@ void drawBullet(int initFlg) {
 
 		//** シェーダー読み込み
 		std::string vShaderFileName = R"#(GLSL/202102/20210205_1.vert)#";
-		std::string fShaderFileName = R"#(GLSL/bullet/captino.frag)#";
-
+		std::string fShaderFileName = R"#(GLSL/bullet/fractal_tree_bullet.frag)#";
 		programId = createShader(vShaderFileName, fShaderFileName);
 
 	}	
@@ -464,6 +463,72 @@ void drawBullet(int initFlg) {
 	GLfloat hitcol[4];
 	glReadPixels(mousePixel[0], mousePixel[1], 1,1, GL_RGBA, GL_FLOAT, hitcol);
 	if(hitcol[3] == 0.0 ){ /*std::cout << "hit!" << "\n";*/ }	
+
+	//std::cout << "frameCount = " << frameCount * 7.0 * 0.003 << "\n";
+
+}
+
+//アプリ側でもちょいちょい制御して、弾幕パターンを変えていく試み
+void drawBullet_yachie(int initFlg) {
+	GLfloat vertex[] = {
+		-1.0,-1.0,0,
+		-1.0,1.0,0,
+		1.0,1.0,0,
+		1.0,-1.0,0
+	};
+
+	if (initFlg == 0) {
+
+		//** 描画データ作成
+		buffer = new GLuint[2];
+		glGenBuffers(2, buffer);
+		glBindBuffer(GL_ARRAY_BUFFER, buffer[0]);
+		glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(float), vertex, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		//** シェーダー読み込み
+		std::string vShaderFileName = R"#(GLSL/202102/20210205_1.vert)#";
+		std::string fShaderFileName = R"#(GLSL/bullet/fractal_tree_bullet.frag)#";
+		programId = createShader(vShaderFileName, fShaderFileName);
+
+	}
+
+	//** シェーダーのattribute変数に頂点データを渡す
+	glBindBuffer(GL_ARRAY_BUFFER, buffer[0]);
+	int posLocation = glGetAttribLocation(programId, "position");
+	glEnableVertexAttribArray(posLocation);
+	glVertexAttribPointer(posLocation, 3, GL_FLOAT, false, 0, NULL);
+
+	//画面サイズをシェーダーに渡す
+	int resolLocation = glGetUniformLocation(programId, "resolution");
+	GLfloat resolution[] = { width,height };
+	glUniform2fv(resolLocation, 1, resolution);
+
+	//フレームカウントをシェーダーに渡す
+	int fcLocation = glGetUniformLocation(programId, "frameCount");
+	glUniform1i(fcLocation, frameCount);
+
+	//マウス座標(pixel)をシェーダーに渡す
+	int msLocation = glGetUniformLocation(programId, "mouse");
+	//mousePixel[0] = 400.0; mousePixel[1] = 400.0;		//右上に固定してみる
+	glUniform2fv(msLocation, 1, mousePixel);
+
+	//再帰回数をシェーダーに渡す
+	//int countLocation = glGetUniformLocation(programId, "count");
+	//int count = mod (frameCount / 100) ;
+	//glUniform1i(countLocation, count);
+	//std::cout << r << "\n";
+
+
+	glDrawArrays(GL_QUADS, 0, 4);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+	//当たり処理
+	GLfloat hitcol[4];
+	glReadPixels(mousePixel[0], mousePixel[1], 1, 1, GL_RGBA, GL_FLOAT, hitcol);
+	if (hitcol[3] == 0.0) { std::cout << "hit!" << "\n"; }
 
 	//std::cout << "frameCount = " << frameCount * 7.0 * 0.003 << "\n";
 

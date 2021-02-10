@@ -82,7 +82,7 @@ int main() {
         glEnable(GL_DEPTH_TEST);
 
         //•`‰æ
-        drawBullet(initFlg);
+        drawBullet_yachie(initFlg);
 
         //‰A–ÊÁ‹‚ğ–³Œø‚É‚·‚é
         glDisable(GL_DEPTH_TEST);
