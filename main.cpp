@@ -5,8 +5,8 @@
 #include "start.h"
 #include "draw.h"
 
-int width = 800;
-int height = 800;
+int width = 400;
+int height = 400;
 GLuint* buffer;
 int frameCount = 0;
 GLfloat mouse[2];

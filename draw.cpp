@@ -423,7 +423,7 @@ void drawBullet(int initFlg) {
 
 		//** シェーダー読み込み
 		std::string vShaderFileName = R"#(GLSL/202102/20210205_1.vert)#";
-		std::string fShaderFileName = R"#(GLSL/bullet/test2.frag)#";
+		std::string fShaderFileName = R"#(GLSL/bullet/captino.frag)#";
 
 		programId = createShader(vShaderFileName, fShaderFileName);
 
@@ -463,7 +463,7 @@ void drawBullet(int initFlg) {
 	//当たり処理
 	GLfloat hitcol[4];
 	glReadPixels(mousePixel[0], mousePixel[1], 1,1, GL_RGBA, GL_FLOAT, hitcol);
-	if(hitcol[3] == 0.0 ){ std::cout << "hit!" << "\n"; }	
+	if(hitcol[3] == 0.0 ){ /*std::cout << "hit!" << "\n";*/ }	
 
 	//std::cout << "frameCount = " << frameCount * 7.0 * 0.003 << "\n";
 
