@@ -18,11 +18,11 @@ void main(void){
 
 	//float t = dot(p,v) / sin(2 * length(p-v));	//(3)sinの中身をlength*2に。sin値がマイナスにも振れるようになる。dot(p,v)もマイナスだった場合、打ち消して正の数になるから、画面下半分にも白い部分ができる
 
-	//float t = dot(p,v) / sin(3 * length(p-v));		//(4)何か面白い感じに
+	//float t = dot(p,v) / sin(3 * length(p-v));		//(4)sinの循環を増やす
 
-	//float t = dot(p,v) / sin(7 * length(p-v));		//(5)数字を増やして遊ぶ
+	//float t = dot(p,v) / sin(7 * length(p-v));		//(5)sinの循環を増やす
 
-	float t = dot(p,v) / sin(7 * length(p-v) + frameCount * 0.001);		//(6)アニメーションしてみたり
+	float t = dot(p,v) / sin(7 * length(p-v) + frameCount * 0.001);		//(6)アニメーションを付ける
 
 	gl_FragColor = vec4(vec3(t),1.0);
 
