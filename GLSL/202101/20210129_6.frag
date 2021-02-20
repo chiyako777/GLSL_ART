@@ -23,7 +23,7 @@ float interpolate(float a, float b, float x){
 // 乱数生成
 float rnd(vec2 p){
     return fract(sin(dot(p ,vec2(12.9898,78.233))) * 43758.5453);       //乱数と言いつつ、ランダムではなく規則性がある。入力が同じならば、常に同じ値が返る
-                                                                        //この辺が格子の各点の勾配ベクトルと距離ベクトルの内積をとってうんぬん・・・の部分
+                                                                        
 
 }
 
@@ -58,13 +58,13 @@ void main(void){
 
 	vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / resolution;		// ピクセル座標を -1 ～ 1 の間に正規化（左下最小）
 
-    //float s = sin(atan(p.x,p.y) - length(p) * 10);        //(1)何の変哲もない巴マークです。（なんか違うけど）
+    //float s = sin(atan(p.x,p.y) - length(p) * 10);        //(1)巴マーク
     //float c = 0.01 / (0.8 * abs(s) - length(p));
 
-    float s = sin(atan(p.x,p.y) - length(p) * 10);        //(2)印象派みたいになったよ
+    float s = sin(atan(p.x,p.y) - length(p) * 10);        //(2)ノイズ付加
     float c = 0.01 / (0.8 * abs(s) - length(p) * n);
 
-    //float s = sin(atan(p.x,p.y) - length(p) * n * 10);        //(3)架空の地図？
+    //float s = sin(atan(p.x,p.y) - length(p) * n * 10);        //(3)地図のような感じ
     //float c = 0.01 / (0.8 * abs(s) - length(p) * n);
 
     //gl_FragColor = vec4(1.0-c,1.0-c,1.0,1.0);
